@@ -18,6 +18,7 @@ terraform {
 provider "aws" {
   region = "eu-west-1"
 }
+
 resource "aws_s3_bucket" "bucket" {
   bucket        = "ssilman-s3-data-bucket"
   force_destroy = true
