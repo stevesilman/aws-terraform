@@ -1,8 +1,9 @@
 terraform {
 
+#Comment out the backend section initially, init and apply, uncomment and init apply to migrate from local to S3
   backend "s3" {
     bucket         = "ssilman-directive-tf-state" # REPLACE WITH YOUR BUCKET NAME
-    key            = "ssilman/import-bootstrap/terraform.tfstate"
+    key            = "import-bootstrap/terraform.tfstate"
     region         = "eu-west-1"
     dynamodb_table = "terraform-state-locking"
     encrypt        = true
