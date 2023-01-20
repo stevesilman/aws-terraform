@@ -18,6 +18,8 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           # terraform_version: 0.13.0:
+          # https://eu-west-1.console.aws.amazon.com/secretsmanager/newsecret?region=eu-west-1
+          # Other Type of Secret TF_API_TOKEN / TF_API_TOKEN_WTF
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Terraform Format
