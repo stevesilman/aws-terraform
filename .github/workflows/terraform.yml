@@ -69,4 +69,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: cd ssilman-app;terraform apply -auto-approve -input=false
+        run: terraform apply -auto-approve -input=false
