@@ -9,7 +9,7 @@ resource "aws_instance" "ec2-instance" {
   user_data       = <<-EOF
                     #!/bin/bash
                     sudo -u ubuntu bash -c 'echo "${data.local_file.public_ssh_key.content}" >> ~/.ssh/authorized_keys'
-                    sudo -u ubuntu bash -c 'echo wanker-ssilman > /tmp/wanker.txt'
+                    sudo -u ubuntu bash -c 'echo wanker-ssilman  > /tmp/wanker.txt'
               EOF
 }
 
