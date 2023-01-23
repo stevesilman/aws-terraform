@@ -18,11 +18,11 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       
     - name: Terraform Init
-      run: terraform init
+      run: terraform -chdir="./ssilman-app" init
       env:
         ACTIONS_RUNNER_DEBUG: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: 'aws-terraform/ssilman-app'
+        #TF_ACTION_WORKING_DIR: 'aws-terraform/ssilman-app'
         AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         
@@ -30,9 +30,9 @@ jobs:
       run: terraform validate
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve
+      run: terraform -chdir="./ssilman-app" apply -auto-approve
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: 'aws-terraform/ssilman-app'
+        #TF_ACTION_WORKING_DIR: 'aws-terraform/ssilman-app'
         AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
