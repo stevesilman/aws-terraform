@@ -8,6 +8,10 @@ data "aws_secretsmanager_secret_version" "current" {
   secret_id = data.aws_secretsmanager_secret.secrets.id
 }
 
+output "sensitive_ssh_hash" {
+  value = jsondecode(nonsensitive(data.aws_secretsmanager_secret_version.current.secret_string))
+}
+
 resource "aws_instance" "ec2-instance" {
   ami             = var.ami
   instance_type   = var.instance_type
