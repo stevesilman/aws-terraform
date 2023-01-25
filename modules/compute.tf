@@ -15,6 +15,7 @@ resource "aws_instance" "ec2-instance" {
   user_data       = <<-EOF
                     #!/bin/bash
                     sudo -u ubuntu bash -c 'echo "${data.aws_secretsmanager_secret_version.current.secret_string}" >> ~/.ssh/authorized_keys'
+                    sudo -u ubuntu bash -c 'echo ubuntu:pa55word | chpasswd --md5 ubuntu'
                  EOF
 }
 
