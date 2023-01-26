@@ -8,6 +8,10 @@ data "aws_secretsmanager_secret_version" "current" {
   secret_id = data.aws_secretsmanager_secret.secrets.id
 }
 
+output "secrets" {
+  value = jsondecode(aws_secretsmanager_secret_version.current.secret_string)["MY_MAC_SSH_PUB_KEY"]
+}
+
 resource "aws_instance" "ec2-instance" {
   ami             = var.ami
   instance_type   = var.instance_type
@@ -15,7 +19,6 @@ resource "aws_instance" "ec2-instance" {
   user_data       = <<-EOF
                     #!/bin/bash
                     sudo -u ubuntu bash -c 'echo "${data.aws_secretsmanager_secret_version.current.secret_string}" >> ~/.ssh/authorized_keys'
-                    sudo -u ubuntu bash -c 'echo ubuntu:pa55word | chpasswd --md5 ubuntu'
                  EOF
 }
 
