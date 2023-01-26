@@ -1,25 +1,44 @@
 
+variable "key_name" {}
 
-data "aws_secretsmanager_secret" "secrets" {
-  name = "MY_MAC_SSH_PUB"
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
 
-data "aws_secretsmanager_secret_version" "current" {
-  secret_id = data.aws_secretsmanager_secret.secrets.id
+resource "aws_key_pair" "generated_key" {
+  key_name   = var.key_name
+  public_key = tls_private_key.example.public_key_openssh
 }
 
-output "ssh_pub_key" {
-  value = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["MY_MAC_SSH_PUB_KEY"]
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "ec2-instance" {
-  ami             = var.ami
-  instance_type   = var.instance_type
-  security_groups = [aws_security_group.ec2-instances.name]
-  user_data       = <<-EOF
-                    #!/bin/bash
-                    sudo -u ubuntu bash -c 'echo "${value}" >> ~/.ssh/authorized_keys'
-                 EOF
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  key_name      = aws_key_pair.generated_key.key_name
+
+  tags {
+    Name = "HelloWorld"
+  }
 }
 
-#data.aws_secretsmanager_secret_version.current.secret_string
+output "private_key" {
+  value     = tls_private_key.example.private_key_pem
+  sensitive = true
+}
+
