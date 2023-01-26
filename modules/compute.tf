@@ -9,7 +9,7 @@ data "aws_secretsmanager_secret_version" "current" {
 }
 
 output "secrets" {
-  value = jsondecode(aws_secretsmanager_secret_version.current.secret_string)["MY_MAC_SSH_PUB_KEY"]
+  value = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["MY_MAC_SSH_PUB_KEY"]
 }
 
 resource "aws_instance" "ec2-instance" {
