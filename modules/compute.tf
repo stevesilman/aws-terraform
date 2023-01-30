@@ -22,7 +22,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name         = var.aws_secretsmanager_secret.my-ssh-pub.content
+  key_name         = data.aws_secretsmanager_secret.my-ssh-pub
 }
 
 
