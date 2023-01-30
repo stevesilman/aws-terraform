@@ -1,6 +1,6 @@
 terraform {
   # Assumes s3 bucket and dynamo DB table already set up
-  # See /code/03-basics/aws-backend
+  # See github/ssilman/terraform/aws-terraform/aws-backend
   backend "s3" {
     bucket         = "ssilman-directive-tf-state"
     key            = "web-app-ssilman/terraform.tfstate"
