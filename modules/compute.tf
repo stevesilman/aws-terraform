@@ -1,6 +1,6 @@
 
 data "aws_secretsmanager_secret" "my-ssh-pub" {
-  name = "MY_MAC_SSH_PUB"
+  name = "MY_MAC_SSH_PUB_KEY"
 }
 
 data "aws_ami" "ubuntu" {
