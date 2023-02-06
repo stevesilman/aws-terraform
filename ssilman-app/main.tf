@@ -21,6 +21,10 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+variable "awsprops"{
+  key_name = "myseckeymac"
+}
+
 module "web_app_ssilman1" {
   source = "../modules"
 
