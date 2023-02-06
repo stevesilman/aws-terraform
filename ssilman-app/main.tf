@@ -28,5 +28,6 @@ module "web_app_ssilman1" {
   app_name         = "web-app-ssilman-1"
   environment_name = "dev"
   instance_type    = "t2.micro"
+  key_name         = "web-app-ssilman-1-key"
 }
 
