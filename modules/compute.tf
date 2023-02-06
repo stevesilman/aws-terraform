@@ -1,7 +1,16 @@
 
-data "aws_secretsmanager_secret" "my-ssh-pub" {
-  name = "MY_MAC_SSH_PUB_KEY"
+variable "key_name" {}
+
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = var.key_name
+  public_key = tls_private_key.example.public_key_openssh
+}
+
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -22,7 +31,9 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name         = data.aws_secretsmanager_secret.my-ssh-pub.id
+  key_name         = aws_key_pair.generated_key.key_name
+
+output "private_key" {
+  value     = tls_private_key.example.private_key_pem
+  sensitive = true
 }
-
-
