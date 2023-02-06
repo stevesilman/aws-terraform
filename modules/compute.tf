@@ -32,6 +32,7 @@ resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name         = aws_key_pair.generated_key.key_name
+}
 
 output "private_key" {
   value     = tls_private_key.example.private_key_pem
