@@ -1,5 +1,6 @@
-variable "awsprops"{
-  key_name = "myseckeymac"
+variable "my_key_name" {
+  name = key_name
+  
 }
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -17,10 +18,11 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name      = lookup(var.awsprops, "key_name")
+  key_name      = my_key_name 
 }
 
 
