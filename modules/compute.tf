@@ -1,7 +1,4 @@
-variable "my_key_name" {
-  name = key_name
-  
-}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -22,7 +19,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name      = my_key_name 
+  key_name      = var.key_name 
 }
 
 
