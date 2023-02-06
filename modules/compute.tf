@@ -1,4 +1,6 @@
-
+variable "awsprops"{
+  key_name = "myseckeymac"
+}
 data "aws_ami" "ubuntu" {
   most_recent = true
 
