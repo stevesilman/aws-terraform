@@ -1,4 +1,3 @@
-variable "key_name" {}
 
 resource "tls_private_key" "example" {
   algorithm = "RSA"
@@ -29,7 +28,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name      = var.key_name 
+  key_name      = "myseckeymac"
 }
 
 
