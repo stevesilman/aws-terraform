@@ -1,4 +1,24 @@
-variable key_name {}
+data "aws_key_pair" "example" {
+  key_name           = "myseckeymac"
+  include_public_key = true
+
+  filter {
+    name   = "tag:Component"
+    values = ["web"]
+  }
+}
+
+output "fingerprint" {
+  value = data.aws_key_pair.example.fingerprint
+}
+
+output "name" {
+  value = data.aws_key_pair.example.key_name
+}
+
+output "id" {
+  value = data.aws_key_pair.example.id
+}
 resource "tls_private_key" "example" {
   algorithm = "RSA"
   rsa_bits  = 4096
