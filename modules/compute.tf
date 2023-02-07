@@ -1,4 +1,14 @@
+variable "key_name" {}
 
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = var.key_name
+  public_key = tls_private_key.example.public_key_openssh
+}
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -19,7 +29,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  key_name      = "myseckeymac"
+  key_name      = var.key_name 
 }
 
 
