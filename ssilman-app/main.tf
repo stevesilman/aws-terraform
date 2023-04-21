@@ -23,7 +23,7 @@ provider "aws" {
 
 
 module "web_app_ssilman1" {
-  source = "../modules"
+  source = "../modules/infra"
 
   # Input Variables
   app_name         = "web-app-ssilman-1"
